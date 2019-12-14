@@ -141,7 +141,6 @@ def Declarative():
 
 
 def Assignment():
-    print('assignment')
     sym_iden = terminal_string[symbol_index][1]
 
     expect(Terminals.ID)
@@ -161,7 +160,6 @@ def Assignment():
 
 def Statement():
     while(True):
-        print('statement')
         if(accept(Terminals.SEMICOLON)):
             continue
         elif(isTerminal(Terminals.INT) or
@@ -179,13 +177,11 @@ def Statement():
 
 
 def Expression():
-    print('expression')
     Term()
     Expression_Prime()
 
 
 def Expression_Prime():
-    print('expression prime')
     if(accept(Terminals.ADDITION)):
         op_stack.append([ADD])
         Term()
@@ -197,13 +193,11 @@ def Expression_Prime():
 
 
 def Conditional():
-    print('conditional')
     Expression()
     Conditional_Prime()
 
 
 def Conditional_Prime():
-    print('conditional prime')
     if(isTerminal(Terminals.GT) or
        isTerminal(Terminals.LT) or
        isTerminal(Terminals.GTE) or
@@ -215,7 +209,6 @@ def Conditional_Prime():
 
 
 def Relop():
-    print('relop')
     if(accept(Terminals.GT)):
         pass
     elif(accept(Terminals.LT)):
@@ -231,13 +224,11 @@ def Relop():
 
 
 def Term():
-    print('term')
     Factor()
     Term_Prime()
 
 
 def Term_Prime():
-    print('term prime')
     if(accept(Terminals.MULTIPLICATION)):
         op_stack.append([MUL])
         Factor()
@@ -249,7 +240,6 @@ def Term_Prime():
 
 
 def Factor():
-    print('factor')
     tmp_sym = terminal_string[symbol_index][1]
 
     if(accept(Terminals.LEFT_PAREN)):
@@ -278,34 +268,10 @@ if __name__ == "__main__":
 
     terminal_string = token_to_terminal(tokens)
     terminal_string.append(('EOF', '$', Terminals.EOF, 0))
-    print(terminal_string)
 
-    # print(terminal_string[symbol_index])
-    # print(isinstance(terminal_string[symbol_index][2], Terminals))
-    # print(terminal_string[symbol_index][2] is Terminals.ID)
 
     Statement()
     print("input accepted")
     print_symbol_table(symbol_table)
-    print('----------')
+    print('')
     print_instruction_table(code_listing)
-    # print(stack)
-    # print(op_stack)
-    # print(memory_table)
-
-
-# def MoreIDs():
-#     if(accept(Terminals.COMMA)):
-#         expect(Terminals.ID)
-#         MoreIDs()
-#     elif(accept(Terminals.SEMICOLON)):
-#         pass
-
-# def MoreStatements():
-#     print('more statement')
-#     print(terminal_string)
-#     Statement()
-
-#     # Keep looping until EOF reached
-#     if(not accept(Terminals.EOF)):
-#         MoreStatements()

@@ -89,11 +89,14 @@ def token_to_terminal(tokens):
 
 
 def print_instruction_table(instruction_table):
+    print('--- Instruction Table ---')
     print('address\tOperation\tOperand')
     for row in instruction_table:
         print("{}\t{}\t\t{}".format(*row))
 
+
 def print_symbol_table(symbol_table):
+    print('--- Symbol Table ---')
     print('Identifier\tMemory Location\tType')
     num_items = len(symbol_table['identifier'])
     for index in range(num_items):
@@ -102,4 +105,3 @@ def print_symbol_table(symbol_table):
             symbol_table['memory_location'][index],
             symbol_table['type'][index]
         ))
-
