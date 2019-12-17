@@ -1,2 +1,2 @@
-boold sum, a, b;
-sum = a + 1;
+int sum, a, b;
+sum = a + *b + 1;

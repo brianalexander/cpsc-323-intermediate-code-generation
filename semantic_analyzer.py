@@ -274,7 +274,6 @@ if __name__ == "__main__":
 
     terminal_string = token_to_terminal(tokens)
     terminal_string.append(('EOF', '$', Terminals.EOF, 0))
-    print(terminal_string)
 
     Statement()
     print("input accepted")
