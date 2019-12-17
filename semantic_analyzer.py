@@ -8,10 +8,7 @@ symbol_index = 0
 code_listing_index = 1
 code_listing = []
 
-# stack = []
 op_stack = []
-
-# memory_table = {}
 
 next_available_memory_location = 5000
 
@@ -88,8 +85,15 @@ def POPM(memory_address):
     # memory_table[memory_address] = stack.pop()
 
 
-def error(message):
-    print("Syntax Error:", message)
+def error(message=''):
+    print("Syntax Error:",
+          message,
+          "Occurred near lexeme",
+          terminal_string[symbol_index][1],
+          'on line',
+          str(terminal_string[symbol_index][3]),
+          "."
+          )
     sys.exit(0)
 
 
@@ -115,7 +119,8 @@ def accept(symbol):
 def expect(symbol):
     if(accept(symbol)):
         return True
-    error("Encountered unexpected symbol.")  # ends execution
+
+    error()  # ends execution
 
 
 def Type():
@@ -124,7 +129,8 @@ def Type():
        accept(Terminals.BOOL)):
         pass
     else:
-        error("Invalid type.")
+        error(" ".join([
+            "Invalid type", ]))
 
 
 def Declarative():
@@ -145,12 +151,12 @@ def Assignment():
 
     expect(Terminals.ID)
 
+    expect(Terminals.ASSIGNEQUALS)
+
     try:
         memory_index = symbol_table['identifier'].index(sym_iden)
     except ValueError:
         error("Identifier not declared.")
-
-    expect(Terminals.ASSIGNEQUALS)
 
     op_stack.append([POPM, symbol_table['memory_location'][memory_index]])
 
@@ -268,7 +274,7 @@ if __name__ == "__main__":
 
     terminal_string = token_to_terminal(tokens)
     terminal_string.append(('EOF', '$', Terminals.EOF, 0))
-
+    print(terminal_string)
 
     Statement()
     print("input accepted")
